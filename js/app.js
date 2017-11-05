@@ -4,12 +4,10 @@
 
 var cards = $(".card i");
 var cardsList = $(".deck li");
-var cardListChildren = $(".deck li i");
 var shuffleButton = $(".fa.fa-repeat");
 var openList = [];
 var clickedTimes = 0;
 var moves = $(".moves");
-var restartMoves = moves.text(0);
 var tilesFlipped = 0;
 var stars = 0;
 
@@ -29,11 +27,11 @@ var addSymbol = function(){
 };
 
 var scoring = function(){
-    if (clickedTimes <= 28){
+    if (clickedTimes <= 16){
         stars = 3;
-    } else if ((clickedTimes > 28) && (clickedTimes <= 40)){
+    } else if ((clickedTimes > 16) && (clickedTimes <= 21)){
         stars = 2;
-    } else if (clickedTimes > 40){
+    } else if (clickedTimes > 21){
         stars = 1;
     }
     //return stars;
@@ -44,7 +42,7 @@ var starsIcons = function(){
         $('#star3').attr('class', 'fa fa-star-o');
     } else if (stars == 1){
         $('#star2').attr('class', 'fa fa-star-o');
-    };
+    }
 };
 
 
@@ -80,6 +78,13 @@ var superShuffle = function(){
 
 }; 
 
+var movesCount = function(){
+    clickedTimes++;
+    moves.text(clickedTimes);
+    scoring();
+    starsIcons();
+};
+
 
 
 
@@ -95,6 +100,7 @@ $(".deck").on("click", "li", function(){
                         addSymbol();
                         emptyOpenList();
                         tilesFlipped += 2;
+                        movesCount();
                         //WIN//
                         if(tilesFlipped == cards.length){
                             setTimeout(function(){
@@ -104,18 +110,19 @@ $(".deck").on("click", "li", function(){
                                     alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
                                 }
                             }, 150);
-                        };
+                        }
 
                         }   //                 
                         else {
+                            movesCount();
                             setTimeout(function(){
-                                removeSymbol(openList)
-                                emptyOpenList()                            
+                                removeSymbol(openList);
+                                emptyOpenList();                            
                                 }, 600);
-                        };
-                    };
-        };
-    };
+                        }
+                    }
+        }
+    }
 });
 
 
@@ -141,12 +148,9 @@ shuffleButton.click(function(){
 
 //// Clicker! /////
 
-cardsList.on("click", function(){
-    clickedTimes++;
-    moves.text(clickedTimes);
-    scoring();
-    starsIcons();
-});
+
+
+
 
 
 
