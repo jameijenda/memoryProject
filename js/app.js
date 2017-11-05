@@ -7,19 +7,44 @@ var cardsList = $(".deck li");
 var cardListChildren = $(".deck li i");
 var shuffleButton = $(".fa.fa-repeat");
 var openList = [];
-var classes = [];
+var clickedTimes = 0;
+var moves = $(".moves");
+var restartMoves = moves.text(0);
+var tilesFlipped = 0;
+var stars = 0;
+
 
 var emptyOpenList = function(){
     openList.splice(0, openList.length);
     };
 
 
-var removeSymbol = function(){
-    $(".deck li").removeClass("show open match");
+
+var removeSymbol = function(a){
+    $(a).removeClass("show open match");
 };
 
 var addSymbol = function(){
     $(".open").addClass("match");
+};
+
+var scoring = function(){
+    if (clickedTimes <= 28){
+        stars = 3;
+    } else if ((clickedTimes > 28) && (clickedTimes <= 40)){
+        stars = 2;
+    } else if (clickedTimes > 40){
+        stars = 1;
+    }
+    //return stars;
+};
+
+var starsIcons = function(){
+    if (stars == 2){
+        $('#star3').attr('class', 'fa fa-star-o');
+    } else if (stars == 1){
+        $('#star2').attr('class', 'fa fa-star-o');
+    };
 };
 
 
@@ -57,82 +82,74 @@ var superShuffle = function(){
 
 
 
-/*$(".deck").on("click", "li", function(){
-    $(this).addClass("show open");
-    openList.push(this);
-    if (openList.length >= 2){
-        if(openList[0].outerHTML == openList[1].outerHTML){
-            if(openList[2].outerHTML == openList[3].outerHTML){
-                if(openList[4].outerHTML == openList[5].outerHTML){
-                    if(openList[6].outerHTML == openList[7].outerHTML){
-                        if(openList[8].outerHTML == openList[9].outerHTML){
-                            if(openList[10].outerHTML == openList[11].outerHTML){
-                                if(openList[12].outerHTML == openList[13].outerHTML){
-                                    if(openList[14].outerHTML == openList[15].outerHTML){
-                                        addSymbol();
-                                    }
-                                }
-                            }
-                        }
-                    }    
-                }
-            }
-        }           
-        } else {
-            setTimeout(function(){
-                removeSymbol()
-                emptyOpenList();
-                }, 1500);
-        }
-    }
-});*/
-
-/*$(".deck").on("click", "li", function(){
-    $(this).addClass("show open");
-    openList.push(this);
-    if (openList.length >= 2){
-        if(openList[0].outerHTML == openList[1].outerHTML && 
-            openList[2].outerHTML == openList[3].outerHTML && 
-            openList[4].outerHTML == openList[5].outerHTML && 
-            openList[6].outerHTML == openList[7].outerHTML && 
-            openList[8].outerHTML == openList[9].outerHTML &&
-            openList[10].outerHTML == openList[11].outerHTML &&
-            openList[12].outerHTML == openList[13].outerHTML &&
-            openList[14].outerHTML == openList[15].outerHTML
-            ) {
-            addSymbol();
-        } else {
-            setTimeout(function(){
-                removeSymbol()
-                emptyOpenList();
-                }, 1500);
-        }
-    }
-});*/
 
 $(".deck").on("click", "li", function(){
-    $(this).addClass("show open");
-    openList.push(this);
-    if (openList.length >= 2){
-        for(var i=0; i<=15; i+=2){
-            if(openList[i].outerHTML === openList[i+1].outerHTML){
-                addSymbol();
-            }                    
-            else {
-                setTimeout(function(){
-                    removeSymbol()
-                    emptyOpenList();
-                    }, 1500);
-            };
+    if($(this).hasClass("show open")){
+        return false;
+    } else{    
+        if (openList.length < 2) {    
+            $(this).addClass("show open");
+            openList.push(this);
+                for(var i=0; i<2; i++){                        
+                    if(openList[i].innerHTML === openList[i+1].innerHTML){
+                        addSymbol();
+                        emptyOpenList();
+                        tilesFlipped += 2;
+                        //WIN//
+                        if(tilesFlipped == cards.length){
+                            setTimeout(function(){
+                                if ((stars == 3) || (stars == 2)){
+                                alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
+                                } else if(stars == 1){
+                                    alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
+                                }
+                            }, 150);
+                        };
+
+                        }   //                 
+                        else {
+                            setTimeout(function(){
+                                removeSymbol(openList)
+                                emptyOpenList()                            
+                                }, 600);
+                        };
+                    };
         };
     };
 });
 
+
+// Win // 
+
+
+//
+
+
 shuffleButton.click(function(){
     emptyOpenList();
-    removeSymbol();
+    removeSymbol($(".deck li"));
     superShuffle();
+    moves.text(0);
+    clickedTimes = 0;
+    tilesFlipped = 0;
+    stars = 3;
+    $('#star3').attr('class', 'fa fa-star');
+    $('#star2').attr('class', 'fa fa-star');
 }); 
+
+
+
+//// Clicker! /////
+
+cardsList.on("click", function(){
+    clickedTimes++;
+    moves.text(clickedTimes);
+    scoring();
+    starsIcons();
+});
+
+
+
 
 
 
