@@ -1,16 +1,18 @@
-/*
- * Create a list that holds all of your cards
- */
 
-var cards = $(".card i");
+ // Variables
+
+var cards = $(".card i"); 
 var cardsList = $(".deck li");
 var shuffleButton = $(".fa.fa-repeat");
 var openList = [];
 var clickedTimes = 0;
 var moves = $(".moves");
+var restartMoves = moves.text(0);
 var tilesFlipped = 0;
 var stars = 0;
 
+
+// Functions
 
 var emptyOpenList = function(){
     openList.splice(0, openList.length);
@@ -34,7 +36,6 @@ var scoring = function(){
     } else if (clickedTimes > 21){
         stars = 1;
     }
-    //return stars;
 };
 
 var starsIcons = function(){
@@ -78,6 +79,14 @@ var superShuffle = function(){
 
 }; 
 
+var winMessage = function(){
+    if ((stars == 3) || (stars == 2)){
+        alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
+        } else if(stars == 1){
+            alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
+        }
+    };
+
 var movesCount = function(){
     clickedTimes++;
     moves.text(clickedTimes);
@@ -90,7 +99,7 @@ var movesCount = function(){
 
 $(".deck").on("click", "li", function(){
     if($(this).hasClass("show open")){
-        return false;
+        return false; //Prevents getting a match from clicking the same card
     } else{    
         if (openList.length < 2) {    
             $(this).addClass("show open");
@@ -101,19 +110,16 @@ $(".deck").on("click", "li", function(){
                         emptyOpenList();
                         tilesFlipped += 2;
                         movesCount();
-                        //WIN//
+                        
+                        //Winning 
+
                         if(tilesFlipped == cards.length){
                             setTimeout(function(){
-                                if ((stars == 3) || (stars == 2)){
-                                alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
-                                } else if(stars == 1){
-                                    alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
-                                }
+                                winMessage();
                             }, 150);
                         }
 
-                        }   //                 
-                        else {
+                    } else {
                             movesCount();
                             setTimeout(function(){
                                 removeSymbol(openList);
@@ -131,7 +137,6 @@ $(".deck").on("click", "li", function(){
 
 //
 
-
 shuffleButton.click(function(){
     emptyOpenList();
     removeSymbol($(".deck li"));
@@ -143,12 +148,6 @@ shuffleButton.click(function(){
     $('#star3').attr('class', 'fa fa-star');
     $('#star2').attr('class', 'fa fa-star');
 }); 
-
-
-
-//// Clicker! /////
-
-
 
 
 
