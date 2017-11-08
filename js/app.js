@@ -10,6 +10,10 @@ var restartMoves = moves.text(0);
 var tilesFlipped = 0;
 var stars = 0;
 var clicks = 0;
+var gameEnd = true;
+/*var timerVar = setInterval(countTimer, 1000);
+clearInterval(timerVar);*/
+
 
 
 
@@ -18,7 +22,7 @@ var clicks = 0;
 
 var gameStarted = function(){
     if (clicks==1){
-        countTimer();
+        var timerVar = setInterval(countTimer, 1000);
     }
 };
 
@@ -124,9 +128,11 @@ $(".deck").on("click", "li", function(){
                     //Winning 
 
                     if(tilesFlipped == cards.length){
+                        gameEnd;
                         setTimeout(function(){
                             winMessage();
                         }, 150);
+                        
                     }
 
                 } else {

@@ -17,7 +17,7 @@
 /*<div id="timer"></div>
 <div id ="stop_timer" onclick="clearInterval(timerVar)">Stop time</div>*/
 
-var timerVar = setInterval(countTimer, 1000);
+/*var timerVar = setInterval(countTimer, 1000);*/
 var totalSeconds = 0;
 function countTimer() {
    ++totalSeconds;
