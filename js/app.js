@@ -1,6 +1,5 @@
 
  // Variables
-
 var cards = $(".card i"); 
 var cardsList = $(".deck li");
 var shuffleButton = $(".fa.fa-repeat");
@@ -10,13 +9,22 @@ var moves = $(".moves");
 var restartMoves = moves.text(0);
 var tilesFlipped = 0;
 var stars = 0;
+var clicks = 0;
+
+
 
 
 // Functions
 
+var gameStarted = function(){
+    if (clicks==1){
+        countTimer();
+    }
+};
+
 var emptyOpenList = function(){
     openList.splice(0, openList.length);
-    };
+};
 
 
 
@@ -100,36 +108,38 @@ var movesCount = function(){
 $(".deck").on("click", "li", function(){
     if($(this).hasClass("show open")){
         return false; //Prevents getting a match from clicking the same card
-    } else{    
-        if (openList.length < 2) {    
-            $(this).addClass("show open");
-            openList.push(this);
-                for(var i=0; i<2; i++){                        
-                    if(openList[i].innerHTML === openList[i+1].innerHTML){
-                        addSymbol();
-                        emptyOpenList();
-                        tilesFlipped += 2;
-                        movesCount();
-                        
-                        //Winning 
+    }       
+    else if (openList.length < 2) {    
+        $(this).addClass("show open");
+        openList.push(this);
+        clicks++;
+        gameStarted();
+            for(var i=0; i<2; i++){                        
+                if(openList[i].innerHTML === openList[i+1].innerHTML){
+                    addSymbol();
+                    emptyOpenList();
+                    tilesFlipped += 2;
+                    movesCount();
+                    
+                    //Winning 
 
-                        if(tilesFlipped == cards.length){
-                            setTimeout(function(){
-                                winMessage();
-                            }, 150);
-                        }
-
-                    } else {
-                            movesCount();
-                            setTimeout(function(){
-                                removeSymbol(openList);
-                                emptyOpenList();                            
-                                }, 600);
-                        }
+                    if(tilesFlipped == cards.length){
+                        setTimeout(function(){
+                            winMessage();
+                        }, 150);
                     }
-        }
+
+                } else {
+                        movesCount();
+                        setTimeout(function(){
+                            removeSymbol(openList);
+                            emptyOpenList();                            
+                            }, 600);
+                }
+            }
     }
 });
+
 
 
 // Win // 
@@ -148,6 +158,8 @@ shuffleButton.click(function(){
     $('#star3').attr('class', 'fa fa-star');
     $('#star2').attr('class', 'fa fa-star');
 }); 
+
+
 
 
 

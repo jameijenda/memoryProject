@@ -30,7 +30,7 @@ body {
 
 h1 {
     font-family: 'Passion One', cursive;
-    font-size: 42px;    
+    font-size: 30px;    
     font-weight: 100;
 }
 
@@ -89,7 +89,8 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
     width: 345px;
     margin-bottom: 10px;
     margin-bottom: 12px;
@@ -103,13 +104,21 @@ h1 {
     margin: 0 5px 0 0;
 }
 
+.score-panel .moves {
+    margin: 0px 5px 10px;
+}
+
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
 }
 
 .score-panel .restart {
-    float: right;
     cursor: pointer;
+    /*margin-left: 20px;*/
+}
+
+.score-panel .timer {
+    justify-content: flex-end;
 }
 
