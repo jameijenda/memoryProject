@@ -1,18 +1,18 @@
 
  // Variables
-var cards = $(".card i"); 
-var cardsList = $(".deck li");
-var shuffleButton = $(".fa.fa-repeat");
-var openList = [];
-var clickedTimes = 0;
-var moves = $(".moves");
-var restartMoves = moves.text(0);
-var tilesFlipped = 0;
-var stars = 0;
-var clicks = 0;
-var gameEnd = true;
-/*var timerVar = setInterval(countTimer, 1000);
-clearInterval(timerVar);*/
+const cards = $(".card i"); 
+const cardsList = $(".deck li");
+const shuffleButton = $(".fa.fa-repeat");
+let openList = [];
+let clickedTimes = 0;
+const moves = $(".moves");
+const restartMoves = moves.text(0);
+let tilesFlipped = 0;
+let stars = 0;
+let clicks = 0;
+const timerVar = setInterval(countTimer, 1000);
+const playAgain = $(".modal-content .playAgain");
+const closeButton = $(".modal-content .closeBtn");
 
 
 
@@ -20,27 +20,28 @@ clearInterval(timerVar);*/
 
 // Functions
 
-var gameStarted = function(){
+const gameStarted = function(){
     if (clicks==1){
-        var timerVar = setInterval(countTimer, 1000);
-    }
+        stop = !stop;
+    } 
 };
 
-var emptyOpenList = function(){
+
+const emptyOpenList = function(){
     openList.splice(0, openList.length);
 };
 
 
 
-var removeSymbol = function(a){
+const removeSymbol = function(a){
     $(a).removeClass("show open match");
 };
 
-var addSymbol = function(){
+const addSymbol = function(){
     $(".open").addClass("match");
 };
 
-var scoring = function(){
+const scoring = function(){
     if (clickedTimes <= 16){
         stars = 3;
     } else if ((clickedTimes > 16) && (clickedTimes <= 21)){
@@ -50,7 +51,7 @@ var scoring = function(){
     }
 };
 
-var starsIcons = function(){
+const starsIcons = function(){
     if (stars == 2){
         $('#star3').attr('class', 'fa fa-star-o');
     } else if (stars == 1){
@@ -82,7 +83,7 @@ function shuffle(array) {
 }
 
 
-var superShuffle = function(){
+const superShuffle = function(){
     shuffle(cards);  
     $(".deck li").empty();
     for (var i = 0; i <= 16; i++){
@@ -91,20 +92,25 @@ var superShuffle = function(){
 
 }; 
 
-var winMessage = function(){
+const winMessage = function(){
     if ((stars == 3) || (stars == 2)){
-        alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
+        
+        $(".modal").css("display", "block");
+        $(".modal-content p").text('Congrats! You time is ' + $("#timer").text() + ' and \n your score is ' + stars + ' stars!')
         } else if(stars == 1){
-            alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
+            $(".modal").css("display", "block");
+            $(".modal-content p").text('Congrats! You time is ' + $("#timer").text() + ' and \n your score is ' + stars + ' star!');
         }
     };
 
-var movesCount = function(){
+const movesCount = function(){
     clickedTimes++;
     moves.text(clickedTimes);
     scoring();
     starsIcons();
 };
+
+
 
 
 
@@ -128,7 +134,8 @@ $(".deck").on("click", "li", function(){
                     //Winning 
 
                     if(tilesFlipped == cards.length){
-                        gameEnd;
+                        stop = true;
+                        gameStarted();
                         setTimeout(function(){
                             winMessage();
                         }, 150);
@@ -163,13 +170,44 @@ shuffleButton.click(function(){
     stars = 3;
     $('#star3').attr('class', 'fa fa-star');
     $('#star2').attr('class', 'fa fa-star');
+    clicks = 0;
+    $("#timer").text(":");
+    totalSeconds = 0;
+    stop = true;
+    $(".modal").css("display", "none");
 }); 
 
+playAgain.click(function(){
+    emptyOpenList();
+    removeSymbol($(".deck li"));
+    superShuffle();
+    moves.text(0);
+    clickedTimes = 0;
+    tilesFlipped = 0;
+    stars = 3;
+    $('#star3').attr('class', 'fa fa-star');
+    $('#star2').attr('class', 'fa fa-star');
+    clicks = 0;
+    $("#timer").text(":");
+    totalSeconds = 0;
+    stop = true;
+    $(".modal").css("display", "none");
+});
+
+closeButton.click(function(){
+    $(".modal").css("display", "none");
+});
 
 
 
 
 
+
+
+/*alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
+        } else if(stars == 1){
+            alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
+        }*/
 
 
 
