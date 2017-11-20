@@ -1,23 +1,18 @@
-/* Taken from: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript */
-
-
-/*  var sec = 0;
-	function pad ( val ) { return val > 9 ? val : "0" + val; }
-    var timer = function(){setInterval( function(){
-        $("#seconds").html(pad(++sec%60));
-        $("#minutes").html(pad(parseInt(sec/60,10)));
-    }, 1000);
-};*/
 
 
 
 
-////// Probar con este!!!  //////
 
-/*<div id="timer"></div>
-<div id ="stop_timer" onclick="clearInterval(timerVar)">Stop time</div>*/
+/***********************************************************************
 
-/*var timerVar = setInterval(countTimer, 1000);*/
+ Taken from: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript 
+  
+  Submitted by "Yusuf"
+
+*************************************************************************/
+
+
+
 
 var stop = true;
 
@@ -35,7 +30,7 @@ function countTimer() {
 };
 
 
-/* Use this!!!!     timerStop = !timerStop  --- Click event handler?*/
+
 
 
 

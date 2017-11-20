@@ -92,6 +92,28 @@ const superShuffle = function(){
 
 }; 
 
+
+/* Start over/replay function */
+
+const startOver = function(){
+    emptyOpenList();
+    removeSymbol($(".deck li"));
+    superShuffle();
+    moves.text(0);
+    clickedTimes = 0;
+    tilesFlipped = 0;
+    stars = 3;
+    $('#star3').attr('class', 'fa fa-star');
+    $('#star2').attr('class', 'fa fa-star');
+    clicks = 0;
+    $("#timer").text(":");
+    totalSeconds = 0;
+    stop = true;
+    $(".modal").css("display", "none");
+};
+
+/* Winning Modal */
+
 const winMessage = function(){
     if ((stars == 3) || (stars == 2)){
         
@@ -103,6 +125,8 @@ const winMessage = function(){
         }
     };
 
+/* Moves track and scoring */
+
 const movesCount = function(){
     clickedTimes++;
     moves.text(clickedTimes);
@@ -112,7 +136,7 @@ const movesCount = function(){
 
 
 
-
+/* Main function, contains "flipping" of cards, matching, scoring, timing and winning */
 
 
 $(".deck").on("click", "li", function(){
@@ -155,59 +179,27 @@ $(".deck").on("click", "li", function(){
 
 
 
-// Win // 
 
-
-//
+/* Shuffle Cards */
 
 shuffleButton.click(function(){
-    emptyOpenList();
-    removeSymbol($(".deck li"));
-    superShuffle();
-    moves.text(0);
-    clickedTimes = 0;
-    tilesFlipped = 0;
-    stars = 3;
-    $('#star3').attr('class', 'fa fa-star');
-    $('#star2').attr('class', 'fa fa-star');
-    clicks = 0;
-    $("#timer").text(":");
-    totalSeconds = 0;
-    stop = true;
-    $(".modal").css("display", "none");
+    startOver()
 }); 
 
+/* Play again after player wins */
+
 playAgain.click(function(){
-    emptyOpenList();
-    removeSymbol($(".deck li"));
-    superShuffle();
-    moves.text(0);
-    clickedTimes = 0;
-    tilesFlipped = 0;
-    stars = 3;
-    $('#star3').attr('class', 'fa fa-star');
-    $('#star2').attr('class', 'fa fa-star');
-    clicks = 0;
-    $("#timer").text(":");
-    totalSeconds = 0;
-    stop = true;
+    startOver();
     $(".modal").css("display", "none");
 });
+
+/* Close modal after player wins */
 
 closeButton.click(function(){
     $(".modal").css("display", "none");
 });
 
 
-
-
-
-
-
-/*alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' stars');
-        } else if(stars == 1){
-            alert('Congrats! You finished on ' + clickedTimes + ' moves! \nYour score is ' + stars + ' star');
-        }*/
 
 
 
