@@ -1,21 +1,38 @@
 # Memory Game Project
 
-## Table of Contents
+The Memory Game project is a simple yet challenging way to test one's coding skills. In order to complete this project, you'll have to get confortable with DOM manipulation and event handlers, amongst other things.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+# How do I play?
 
-## Instructions
+You have to find matches. In order to do so, start by "opening" (selecting) pairs of cards and try to remember the position of each figure.
+If you match an open card with another one with the same figure, the cards stay open.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## How do I win?
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+You win by finding all matches, that is, by finding where each pair of matching figures is located.
 
-## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+## Is there a score?
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
-# memoryProject
+Yes! The score is based on the amount of moves it takes you to win, the criteria is as follows:
+
+- 3 stars : 16 moves or less
+- 2 stars : Between 17 and 21 moves
+- 1 star  : More than 21 moves
+
+
+## What if I get stuck and want to start over with a different deck?
+
+If you get bored/pissed at the current arrengement of the cards, you can shuffle them by clicking the "start over" button located next to the timer.
+
+### Licence 
+
+This project is released under the [MIT Licence](https://opensource.org/licenses/MIT).
+
+
+
+
+
+
+
